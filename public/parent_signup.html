@@ -392,9 +392,66 @@
             }
         }
 
-        function handleParentSubmit(event) {
-            event.preventDefault();
-            alert('Registration successful!!');
+        async function handleParentSubmit(event) {
+                event.preventDefault();
+
+                const submitBtn = document.getElementById("pSubmitBtn");
+                submitBtn.disabled = true;
+
+                const selectedSubjects = Array.from(
+                    document.querySelectorAll(
+                        'input[name="pSubjectCheckbox"]:checked'
+                    )
+                ).map(cb => cb.value);
+
+                const otherSubject = document.getElementById("pSubjectsOther")
+                    .value.trim();
+                const subjectsNeeded = selectedSubjects.map(subject =>
+                    subject === "Others" && otherSubject
+                        ? `Others: ${otherSubject}`
+                        : subject
+                );
+
+                const payload = {
+                    fullName: document.getElementById("pName").value.trim(),
+                    phone: document.getElementById("pPhone").value.trim(),
+                    email: document.getElementById("pEmail").value.trim(),
+                    password: document.getElementById("pPassword").value,
+                    location: document.getElementById("pLocation").value.trim(),
+                    studentClass: document.getElementById("pClass")
+                        .selectedOptions[0].textContent.trim(),
+                    subjectsNeeded,
+                    preferredTime: document.getElementById("pTime").value,
+                    budget: document.getElementById("pBudget").value
+                };
+
+                try {
+                const response = await fetch(
+                    "http://localhost:5000/api/auth/register/parent",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                throw new Error(result.message || "Registration failed.");
+                }
+
+                alert(result.message);
+                document.getElementById("parentSignupForm").reset();
+            } catch (error) {
+                alert(error.message || "Cannot connect to the server.");
+                console.error("Parent signup error:", error);
+            } finally {
+                submitBtn.disabled = false;
+                validateParentForm();
+            }
         }
     </script>
 </body>
