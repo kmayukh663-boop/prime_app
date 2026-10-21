@@ -42,7 +42,6 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-
                     <h2 class="text-2xl font-black text-slate-900 tracking-tight">Tutor / Educator Onboarding</h2>
                     <p class="text-xs text-slate-500 font-medium">Apply to teach home tuitions and receive verified batches.</p>
                 </div>
@@ -51,68 +50,28 @@
             <!-- Tutor Registration Form -->
             <form id="tutorSignupForm" class="space-y-4" onsubmit="handleTutorSubmit(event)">
                 
-                <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">1. Full Name *</label>
-                    <input type="text" id="tName" required placeholder="e.g. Dr. Anjali Verma" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">2. Phone Number *</label>
-                        <input type="tel" id="tPhone" required placeholder="+91 9876543210" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                        <p id="tPhoneError" class="text-[10px] text-slate-400 mt-1">10-digit mobile number</p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">3. Email ID *</label>
-                        <input type="email" id="tEmail" required placeholder="e.g. tutor@example.com" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                        <p id="tEmailError" class="text-[10px] text-slate-400 mt-1">Valid email format</p>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">4. Area / Location *</label>
-                    <input type="text" id="tLocation" required placeholder="e.g. Indirapuram, Ghaziabad" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">5. Classes You Can Teach *</label>
-                        <input type="text" id="tClasses" required placeholder="e.g. Class 8 to 12" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">6. Subjects Specialization *</label>
-                        <input type="text" id="tSubjects" required placeholder="e.g. Physics, Chemistry" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">7. Highest Qualification *</label>
-                        <input type="text" id="tQualification" required placeholder="e.g. M.Sc. Physics / B.Tech" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">8. Experience (in years) *</label>
-                        <input type="text" id="tExperience" required placeholder="e.g. 4 Years" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
-                    </div>
+                <!-- Dynamic Text/Input Container -->
+                <div id="tutorDynamicContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dynamic fields rendered via JS -->
                 </div>
 
                 <!-- CV / Resume Upload -->
                 <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">9. Upload CV / Resume *</label>
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Upload CV / Resume *</label>
                     <input type="file" id="tResume" required accept=".pdf,.doc,.docx" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-500 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 shadow-sm" onchange="validateTutorForm()">
                     <p class="text-[11px] text-slate-400 mt-1">Accepted formats: PDF, DOC, DOCX (Max 5MB)</p>
                 </div>
 
-                <!-- Educational Documents Upload (Multiple Allowed, Min 1) -->
+                <!-- Educational Documents Upload -->
                 <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">10. Educational Documents (Certificates/Degrees) *</label>
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Educational Documents (Certificates/Degrees) *</label>
                     <input type="file" id="tEduDocs" required multiple accept=".pdf,.jpg,.jpeg,.png" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-500 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 shadow-sm" onchange="validateTutorForm()">
                     <p class="text-[11px] text-slate-400 mt-1">You can upload multiple files (Hold Ctrl/Cmd to select multiple).</p>
                 </div>
 
                 <!-- ID Proof Upload -->
                 <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">11. Upload ID Proof *</label>
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Upload ID Proof *</label>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <select id="tIdType" required class="px-3 py-2.5 bg-white border border-slate-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-purple-600 text-slate-700" onchange="validateTutorForm()">
                             <option value="">Select ID Type</option>
@@ -149,8 +108,48 @@
         &copy; 2026 Prime Tuitions / Solutions. Secure Educator Portal.
     </footer>
 
-    <!-- Validation Script -->
+    <!-- Script -->
     <script>
+        const defaultTutorSchema = [
+            { id: "tName", label: "Full Name", type: "text", placeholder: "e.g. Dr. Anjali Verma", required: true, width: "full" },
+            { id: "tPhone", label: "Phone Number", type: "tel", placeholder: "+91 9876543210", required: true, width: "half", errorId: "tPhoneError", defaultErrorText: "10-digit mobile number" },
+            { id: "tEmail", label: "Email ID", type: "email", placeholder: "e.g. tutor@example.com", required: true, width: "half", errorId: "tEmailError", defaultErrorText: "Valid email format" },
+            { id: "tLocation", label: "Area / Location", type: "text", placeholder: "e.g. Indirapuram, Ghaziabad", required: true, width: "full" },
+            { id: "tClasses", label: "Classes You Can Teach", type: "text", placeholder: "e.g. Class 8 to 12", required: true, width: "half" },
+            { id: "tSubjects", label: "Subjects Specialization", type: "text", placeholder: "e.g. Physics, Chemistry", required: true, width: "half" },
+            { id: "tQualification", label: "Highest Qualification", type: "text", placeholder: "e.g. M.Sc. Physics / B.Tech", required: true, width: "half" },
+            { id: "tExperience", label: "Experience (in years)", type: "text", placeholder: "e.g. 4 Years", required: true, width: "half" }
+        ];
+
+        function renderDynamicTutorFields() {
+            const container = document.getElementById('tutorDynamicContainer');
+            const storedSchema = localStorage.getItem('tutor_signup_schema');
+            const fields = storedSchema ? JSON.parse(storedSchema) : defaultTutorSchema;
+
+            container.innerHTML = '';
+
+            fields.forEach((field, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = field.width === 'full' ? 'sm:col-span-2' : 'sm:col-span-1';
+
+                let helperHTML = field.errorId ? `<p id="${field.errorId}" class="text-[10px] text-slate-400 mt-1">${field.defaultErrorText || ''}</p>` : '';
+
+                wrapper.innerHTML = `
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">
+                        ${index + 1}. ${field.label} ${field.required ? '*' : ''}
+                    </label>
+                    <input type="${field.type}" 
+                           id="${field.id}" 
+                           ${field.required ? 'required' : ''} 
+                           placeholder="${field.placeholder || ''}" 
+                           class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" 
+                           oninput="validateTutorForm()">
+                    ${helperHTML}
+                `;
+                container.appendChild(wrapper);
+            });
+        }
+
         function togglePassword(fieldId, iconId) {
             const field = document.getElementById(fieldId);
             const icon = document.getElementById(iconId);
@@ -166,30 +165,25 @@
         }
 
         function validateEmail(email) {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(email);
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
         function validatePhone(phone) {
-            const regex = /^(\+91[\-\s]?)?[6-9]\d{9}$/;
-            return regex.test(phone);
+            return /^(\+91[\-\s]?)?[6-9]\d{9}$/.test(phone);
         }
 
         function validatePassword(password) {
-            const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            return regex.test(password);
+            return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!\%*?&]{8,}$/.test(password);
         }
 
         function validateTutorForm() {
-            const name = document.getElementById('tName').value.trim();
-            const phone = document.getElementById('tPhone').value.trim();
-            const email = document.getElementById('tEmail').value.trim();
-            const location = document.getElementById('tLocation').value.trim();
-            const classes = document.getElementById('tClasses').value.trim();
-            const subjects = document.getElementById('tSubjects').value.trim();
-            const qualification = document.getElementById('tQualification').value.trim();
-            const experience = document.getElementById('tExperience').value.trim();
+            const nameEl = document.getElementById('tName');
+            const phoneEl = document.getElementById('tPhone');
+            const emailEl = document.getElementById('tEmail');
             
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+
             const resume = document.getElementById('tResume').files.length > 0;
             const eduDocs = document.getElementById('tEduDocs').files.length > 0;
             const idType = document.getElementById('tIdType').value;
@@ -201,53 +195,39 @@
             const passError = document.getElementById('tPasswordError');
             const submitBtn = document.getElementById('tSubmitBtn');
 
-            const isPhoneValid = validatePhone(phone);
-            const isEmailValid = validateEmail(email);
+            const isPhoneValid = phoneEl ? validatePhone(phone) : true;
+            const isEmailValid = emailEl ? validateEmail(email) : true;
             const isPassValid = validatePassword(password);
 
-            // Phone feedback
-            if (phone.length > 0) {
-                if (!isPhoneValid) {
-                    phoneErr.className = "text-[10px] text-rose-500 mt-1";
-                    phoneErr.innerText = "Enter valid 10-digit mobile number.";
+            if (phoneEl && phoneErr) {
+                if (phone.length > 0) {
+                    phoneErr.className = isPhoneValid ? "text-[10px] text-emerald-600 mt-1" : "text-[10px] text-rose-500 mt-1";
+                    phoneErr.innerText = isPhoneValid ? "Valid phone number format." : "Enter valid 10-digit mobile number.";
                 } else {
-                    phoneErr.className = "text-[10px] text-emerald-600 mt-1";
-                    phoneErr.innerText = "Valid phone number format.";
+                    phoneErr.className = "text-[10px] text-slate-400 mt-1";
+                    phoneErr.innerText = "10-digit mobile number";
                 }
-            } else {
-                phoneErr.className = "text-[10px] text-slate-400 mt-1";
-                phoneErr.innerText = "10-digit mobile number";
             }
 
-            // Email feedback
-            if (email.length > 0) {
-                if (!isEmailValid) {
-                    emailErr.className = "text-[10px] text-rose-500 mt-1";
-                    emailErr.innerText = "Enter a valid email address.";
+            if (emailEl && emailErr) {
+                if (email.length > 0) {
+                    emailErr.className = isEmailValid ? "text-[10px] text-emerald-600 mt-1" : "text-[10px] text-rose-500 mt-1";
+                    emailErr.innerText = isEmailValid ? "Valid email format." : "Enter a valid email address.";
                 } else {
-                    emailErr.className = "text-[10px] text-emerald-600 mt-1";
-                    emailErr.innerText = "Valid email format.";
+                    emailErr.className = "text-[10px] text-slate-400 mt-1";
+                    emailErr.innerText = "Valid email format";
                 }
-            } else {
-                emailErr.className = "text-[10px] text-slate-400 mt-1";
-                emailErr.innerText = "Valid email format";
             }
 
-            // Password feedback
             if (password.length > 0) {
-                if (!isPassValid) {
-                    passError.className = "text-[11px] text-rose-500 mt-1";
-                    passError.innerText = "Password must be min 8 chars with letters, numbers & special character.";
-                } else {
-                    passError.className = "text-[11px] text-emerald-600 mt-1";
-                    passError.innerText = "Password criteria met successfully!";
-                }
+                passError.className = isPassValid ? "text-[11px] text-emerald-600 mt-1" : "text-[11px] text-rose-500 mt-1";
+                passError.innerText = isPassValid ? "Password criteria met successfully!" : "Password must be min 8 chars with letters, numbers & special character.";
             } else {
                 passError.className = "text-[11px] text-slate-400 mt-1";
                 passError.innerText = "Must be min 8 chars, include letters, numbers & special character.";
             }
 
-            const allFilled = name && isPhoneValid && isEmailValid && location && classes && subjects && qualification && experience && resume && eduDocs && idType && idFile && isPassValid;
+            const allFilled = isPhoneValid && isEmailValid && resume && eduDocs && idType && idFile && isPassValid;
 
             if (allFilled) {
                 submitBtn.removeAttribute('disabled');
@@ -260,6 +240,10 @@
             event.preventDefault();
             alert('Registration successful!!');
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDynamicTutorFields();
+        });
     </script>
 </body>
 </html>
