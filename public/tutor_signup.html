@@ -74,25 +74,67 @@
                     <input type="text" id="tLocation" required placeholder="e.g. Indirapuram, Ghaziabad" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 gap-4">
                     <div>
                         <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">5. Classes You Can Teach *</label>
-                        <input type="text" id="tClasses" required placeholder="e.g. Class 8 to 12" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
+                        <select id="tClasses" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm text-slate-700" onchange="onTutorClassChange(); validateTutorForm()">
+                            <option value="">Select Classes</option>
+                            <option value="lower">Nursery - UKG (Pre-Primary)</option>
+                            <option value="primary">1st - 5th (Primary)</option>
+                            <option value="middle">6th - 8th (Middle School)</option>
+                            <option value="secondary">9th - 10th (Secondary Board)</option>
+                            <option value="senior">11th - 12th (Senior Secondary)</option>
+                        </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">6. Subjects Specialization *</label>
-                        <input type="text" id="tSubjects" required placeholder="e.g. Physics, Chemistry" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">6. Subjects Specialization (Select Multiple) *</label>
+                        <div id="tSubjectsContainer" aria-disabled="true" class="h-[92px] p-3 bg-slate-100 border border-slate-300 rounded-xl text-sm text-slate-400 opacity-70 cursor-not-allowed">
+                            Please select the classes you can teach first.
+                        </div>
+                        <input type="hidden" id="tSubjects" value="">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">7. Highest Qualification *</label>
-                        <input type="text" id="tQualification" required placeholder="e.g. M.Sc. Physics / B.Tech" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
+                        <select id="tQualification" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm text-slate-700" onchange="validateTutorForm()">
+                            <option value="">Select Highest Qualification</option>
+                            <option value="Intermediate (Class 12)">Intermediate (Class 12)</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Bachelor's Degree">Bachelor's Degree</option>
+                            <option value="Master's Degree">Master's Degree</option>
+                            <option value="M.Phil">M.Phil</option>
+                            <option value="PhD">PhD</option>
+                        </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">8. Experience (in years) *</label>
-                        <input type="text" id="tExperience" required placeholder="e.g. 4 Years" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm" oninput="validateTutorForm()">
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">8. Teaching Experience *</label>
+                        <select id="tExperience" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 transition-all shadow-sm text-slate-700" onchange="validateTutorForm()">
+                            <option value="">Select Experience</option>
+                            <option value="Fresher">Fresher (No experience)</option>
+                            <option value="1 Year">1 Year</option>
+                            <option value="2 Years">2 Years</option>
+                            <option value="3 Years">3 Years</option>
+                            <option value="4 Years">4 Years</option>
+                            <option value="5 Years">5 Years</option>
+                            <option value="6 Years">6 Years</option>
+                            <option value="7 Years">7 Years</option>
+                            <option value="8 Years">8 Years</option>
+                            <option value="9 Years">9 Years</option>
+                            <option value="10 Years">10 Years</option>
+                            <option value="11 Years">11 Years</option>
+                            <option value="12 Years">12 Years</option>
+                            <option value="13 Years">13 Years</option>
+                            <option value="14 Years">14 Years</option>
+                            <option value="15 Years">15 Years</option>
+                            <option value="16 Years">16 Years</option>
+                            <option value="17 Years">17 Years</option>
+                            <option value="18 Years">18 Years</option>
+                            <option value="19 Years">19 Years</option>
+                            <option value="20 Years">20 Years</option>
+                            <option value="20+ Years">20+ Years</option>
+                        </select>
                     </div>
                 </div>
 
@@ -151,6 +193,56 @@
 
     <!-- Validation Script -->
     <script>
+        const tutorSubjectsGeneral = ["Hindi", "English", "Maths", "Science", "SST", "Computer", "All Subjects", "Others"];
+        const tutorSubjectsSenior = ["Physics", "Maths", "Chemistry", "Biology", "Accounts", "Economics", "Business Studies", "Humanities", "Computer Science", "Others"];
+
+        function onTutorClassChange() {
+            const container = document.getElementById("tSubjectsContainer");
+            const classValue = document.getElementById("tClasses").value;
+
+            // Keep subjects disabled until a class category is selected.
+            if (!classValue) {
+                container.innerHTML = "Please select the classes you can teach first.";
+                container.className = "h-[92px] p-3 bg-slate-100 border border-slate-300 rounded-xl text-sm text-slate-400 opacity-70 cursor-not-allowed";
+                container.setAttribute("aria-disabled", "true");
+                document.getElementById("tSubjects").value = "";
+                return;
+            }
+
+            container.innerHTML = "";
+            container.className = "h-[92px] overflow-y-auto p-2 bg-white border border-slate-300 rounded-xl text-sm text-slate-700 shadow-sm";
+            container.setAttribute("aria-disabled", "false");
+
+            const list = classValue === "senior" ? tutorSubjectsSenior : tutorSubjectsGeneral;
+            const grid = document.createElement("div");
+            grid.className = "grid grid-cols-2 gap-x-2 gap-y-1 w-full";
+
+            list.forEach((subject, index) => {
+                const label = document.createElement("label");
+                label.className = "flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer hover:text-purple-600 px-1 py-0.5 rounded";
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.name = "tSubjectCheckbox";
+                checkbox.value = subject;
+                checkbox.id = `t_subject_${index}`;
+                checkbox.className = "rounded border-slate-300 text-purple-600 focus:ring-purple-500 h-4 w-4";
+                checkbox.addEventListener("change", updateTutorSubjects);
+                const text = document.createElement("span");
+                text.textContent = subject;
+                label.append(checkbox, text);
+                grid.appendChild(label);
+            });
+            container.appendChild(grid);
+            updateTutorSubjects();
+        }
+
+        function updateTutorSubjects() {
+            const selected = Array.from(document.querySelectorAll('input[name="tSubjectCheckbox"]:checked'))
+                .map(checkbox => checkbox.value);
+            document.getElementById("tSubjects").value = selected.join(", ");
+            validateTutorForm();
+        }
+
         function togglePassword(fieldId, iconId) {
             const field = document.getElementById(fieldId);
             const icon = document.getElementById(iconId);
@@ -256,10 +348,101 @@
             }
         }
 
-        function handleTutorSubmit(event) {
+
+        async function handleTutorSubmit(event) {
             event.preventDefault();
-            alert('Registration successful!!');
+
+            const submitBtn = document.getElementById("tSubmitBtn");
+            submitBtn.disabled = true;
+
+            const formData = new FormData();
+
+            formData.append(
+                "fullName",
+                document.getElementById("tName").value.trim()
+            );
+            formData.append(
+                "phone",
+                document.getElementById("tPhone").value.trim()
+            );
+            formData.append(
+                "email",
+                document.getElementById("tEmail").value.trim()
+            );
+            formData.append(
+                "password",
+                document.getElementById("tPassword").value
+            );
+            formData.append(
+                "location",
+                document.getElementById("tLocation").value.trim()
+            );
+            formData.append(
+                "classes",
+                document.getElementById("tClasses").selectedOptions[0].textContent.trim()
+            );
+            formData.append(
+                "subjects",
+                document.getElementById("tSubjects").value.trim()
+            );
+            formData.append(
+                "qualification",
+                document.getElementById("tQualification").value.trim()
+            );
+            formData.append(
+                "experience",
+                document.getElementById("tExperience").value.trim()
+            );
+            formData.append(
+                "idType",
+                document.getElementById("tIdType").value
+            );
+
+            formData.append(
+                "resume",
+                document.getElementById("tResume").files[0]
+            );
+
+            Array.from(
+                document.getElementById("tEduDocs").files
+            ).forEach(file => {
+                formData.append("educationDocs", file);
+            });
+
+            formData.append(
+                "idProof",
+                document.getElementById("tIdFile").files[0]
+            );
+
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/auth/register/tutor",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || "Registration failed.");
+                }
+
+                alert(result.message);
+                document.getElementById("tutorSignupForm").reset();
+            } catch (error) {
+                alert(error.message || "Cannot connect to the server.");
+                console.error("Tutor signup error:", error);
+            } finally {
+                submitBtn.disabled = false;
+                validateTutorForm();
+            }
         }
+
+        // Render subject checkboxes immediately; they are never disabled by class selection.
+        document.addEventListener("DOMContentLoaded", onTutorClassChange);
+
     </script>
 </body>
 </html>

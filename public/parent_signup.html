@@ -42,7 +42,6 @@
                     <i class="fa-solid fa-user-group"></i>
                 </div>
                 <div>
-
                     <h2 class="text-2xl font-black text-slate-900 tracking-tight">Parent Portal Sign-Up</h2>
                     <p class="text-xs text-slate-500 font-medium">Register to find and manage verified home tutors.</p>
                 </div>
@@ -51,31 +50,14 @@
             <!-- Parent Registration Form -->
             <form id="parentSignupForm" class="space-y-4" onsubmit="handleParentSubmit(event)">
                 
-                <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">1. Full Name *</label>
-                    <input type="text" id="pName" required placeholder="e.g. Ramesh Sharma" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm" oninput="validateParentForm()">
+                <!-- Dynamic Form Container: Auto-layouts fields configured by Admin -->
+                <div id="dynamicFieldsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Fields injected automatically via JavaScript -->
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">2. Phone Number *</label>
-                        <input type="tel" id="pPhone" required placeholder="+91 9876543210" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm" oninput="validateParentForm()">
-                        <p id="phoneError" class="text-[10px] text-slate-400 mt-1">10-digit mobile number</p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">3. Email ID *</label>
-                        <input type="email" id="pEmail" required placeholder="e.g. parent@example.com" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm" oninput="validateParentForm()">
-                        <p id="emailError" class="text-[10px] text-slate-400 mt-1">Valid email format</p>
-                    </div>
-                </div>
-
+                <!-- Child's Class Selection -->
                 <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">4. Area / Location *</label>
-                    <input type="text" id="pLocation" required placeholder="e.g. Sector 62, Noida" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm" oninput="validateParentForm()">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">5. Child's Class *</label>
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Child's Class *</label>
                     <select id="pClass" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm text-slate-700" onchange="onClassChange()">
                         <option value="">Select Class</option>
                         <option value="lower">Nursery - UKG (Pre-Primary)</option>
@@ -86,8 +68,9 @@
                     </select>
                 </div>
 
+                <!-- Subjects Selection Container -->
                 <div>
-                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">6. Subjects Needed (Select Multiple) *</label>
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Subjects Needed (Select Multiple) *</label>
                     <div id="pSubjectsContainer" class="p-4 bg-slate-100 border border-slate-300 rounded-xl text-sm text-slate-400">
                         Please select a child's class first.
                     </div>
@@ -100,10 +83,10 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Preferred Time Slot (Optional Clock Widget) -->
+                    <!-- Preferred Time Slot -->
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
-                            <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider">7. Preferred Time</label>
+                            <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider">Preferred Time</label>
                             <span class="text-[10px] text-slate-400 font-bold uppercase">(Optional)</span>
                         </div>
                         
@@ -158,9 +141,9 @@
                         <input type="hidden" id="pTime" name="preferred_time" value="">
                     </div>
 
-                    <!-- Preferred Budget (Mandatory) -->
+                    <!-- Preferred Budget -->
                     <div>
-                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">8. Preferred Budget *</label>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Preferred Budget *</label>
                         <select id="pBudget" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm text-slate-700" onchange="validateParentForm()">
                             <option value="">Select Budget Range</option>
                             <option>₹3,000 - ₹5,000 / mo</option>
@@ -171,7 +154,7 @@
                     </div>
                 </div>
 
-                <!-- Password with Eye Toggle -->
+                <!-- Password Creation -->
                 <div>
                     <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Create Password *</label>
                     <div class="relative">
@@ -196,8 +179,46 @@
         &copy; 2026 Prime Tuitions / Solutions. Secure Parent Portal.
     </footer>
 
-    <!-- Validation Script -->
+    <!-- Schema Engine & Dynamic Rendering Script -->
     <script>
+        // Baseline Parent Form Schema Fallback
+        const defaultParentSchema = [
+            { id: "pName", label: "Full Name", type: "text", placeholder: "e.g. Ramesh Sharma", required: true, width: "full" },
+            { id: "pPhone", label: "Phone Number", type: "tel", placeholder: "+91 9876543210", required: true, width: "half", errorId: "phoneError", defaultErrorText: "10-digit mobile number" },
+            { id: "pEmail", label: "Email ID", type: "email", placeholder: "e.g. parent@example.com", required: true, width: "half", errorId: "emailError", defaultErrorText: "Valid email format" },
+            { id: "pLocation", label: "Area / Location", type: "text", placeholder: "e.g. Sector 62, Noida", required: true, width: "full" }
+        ];
+
+        function renderDynamicParentFields() {
+            const container = document.getElementById('dynamicFieldsContainer');
+            const storedSchema = localStorage.getItem('parent_signup_schema');
+            const fields = storedSchema ? JSON.parse(storedSchema) : defaultParentSchema;
+
+            container.innerHTML = '';
+
+            fields.forEach((field, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = field.width === 'full' ? 'sm:col-span-2' : 'sm:col-span-1';
+
+                let helperHTML = field.errorId ? `<p id="${field.errorId}" class="text-[10px] text-slate-400 mt-1">${field.defaultErrorText || ''}</p>` : '';
+
+                wrapper.innerHTML = `
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">
+                        ${index + 1}. ${field.label} ${field.required ? '*' : ''}
+                    </label>
+                    <input type="${field.type}" 
+                           id="${field.id}" 
+                           ${field.required ? 'required' : ''} 
+                           placeholder="${field.placeholder || ''}" 
+                           class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm" 
+                           oninput="validateParentForm()">
+                    ${helperHTML}
+                `;
+                container.appendChild(wrapper);
+            });
+        }
+
+        // Subject lists
         const subjectsLower = ["Hindi", "English", "Maths", "Science", "SST", "Computer", "All Subjects", "Others"];
         const subjectsSenior = ["Physics", "Maths", "Chemistry", "Biology", "Accounts", "Economics", "Humanities", "Computer Science", "Others"];
 
@@ -284,18 +305,15 @@
         }
 
         function validateEmail(email) {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(email);
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
         function validatePhone(phone) {
-            const regex = /^(\+91[\-\s]?)?[6-9]\d{9}$/;
-            return regex.test(phone);
+            return /^(\+91[\-\s]?)?[6-9]\d{9}$/.test(phone);
         }
 
         function validatePassword(password) {
-            const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!\%*?&]{8,}$/;
-            return regex.test(password);
+            return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
         }
 
         function updatePreferredTimeValue() {
@@ -304,69 +322,57 @@
             const period = document.getElementById('pTimePeriod').value;
             const hiddenTimeInput = document.getElementById('pTime');
 
-            if (hour && minute) {
-                hiddenTimeInput.value = `${hour}:${minute} ${period}`;
-            } else {
-                hiddenTimeInput.value = '';
-            }
+            hiddenTimeInput.value = (hour && minute) ? `${hour}:${minute} ${period}` : '';
             validateParentForm();
         }
 
         function validateParentForm() {
-            const name = document.getElementById('pName').value.trim();
-            const phone = document.getElementById('pPhone').value.trim();
-            const email = document.getElementById('pEmail').value.trim();
-            const location = document.getElementById('pLocation').value.trim();
+            const nameEl = document.getElementById('pName');
+            const phoneEl = document.getElementById('pPhone');
+            const emailEl = document.getElementById('pEmail');
+            const locationEl = document.getElementById('pLocation');
+
+            const name = nameEl ? nameEl.value.trim() : 'Valid';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const location = locationEl ? locationEl.value.trim() : 'Valid';
+
             const cls = document.getElementById('pClass').value;
             const budget = document.getElementById('pBudget').value;
             const password = document.getElementById('pPassword').value;
-            
+
             const phoneErr = document.getElementById('phoneError');
             const emailErr = document.getElementById('emailError');
             const passError = document.getElementById('pPasswordError');
             const submitBtn = document.getElementById('pSubmitBtn');
 
-            const isPhoneValid = validatePhone(phone);
-            const isEmailValid = validateEmail(email);
+            const isPhoneValid = phoneEl ? validatePhone(phone) : true;
+            const isEmailValid = emailEl ? validateEmail(email) : true;
             const isPassValid = validatePassword(password);
 
-            // Phone feedback
-            if (phone.length > 0) {
-                if (!isPhoneValid) {
-                    phoneErr.className = "text-[10px] text-rose-500 mt-1";
-                    phoneErr.innerText = "Enter valid 10-digit mobile number.";
+            if (phoneEl && phoneErr) {
+                if (phone.length > 0) {
+                    phoneErr.className = isPhoneValid ? "text-[10px] text-emerald-600 mt-1" : "text-[10px] text-rose-500 mt-1";
+                    phoneErr.innerText = isPhoneValid ? "Valid phone number format." : "Enter valid 10-digit mobile number.";
                 } else {
-                    phoneErr.className = "text-[10px] text-emerald-600 mt-1";
-                    phoneErr.innerText = "Valid phone number format.";
+                    phoneErr.className = "text-[10px] text-slate-400 mt-1";
+                    phoneErr.innerText = "10-digit mobile number";
                 }
-            } else {
-                phoneErr.className = "text-[10px] text-slate-400 mt-1";
-                phoneErr.innerText = "10-digit mobile number";
             }
 
-            // Email feedback
-            if (email.length > 0) {
-                if (!isEmailValid) {
-                    emailErr.className = "text-[10px] text-rose-500 mt-1";
-                    emailErr.innerText = "Enter a valid email address.";
+            if (emailEl && emailErr) {
+                if (email.length > 0) {
+                    emailErr.className = isEmailValid ? "text-[10px] text-emerald-600 mt-1" : "text-[10px] text-rose-500 mt-1";
+                    emailErr.innerText = isEmailValid ? "Valid email format." : "Enter a valid email address.";
                 } else {
-                    emailErr.className = "text-[10px] text-emerald-600 mt-1";
-                    emailErr.innerText = "Valid email format.";
+                    emailErr.className = "text-[10px] text-slate-400 mt-1";
+                    emailErr.innerText = "Valid email format";
                 }
-            } else {
-                emailErr.className = "text-[10px] text-slate-400 mt-1";
-                emailErr.innerText = "Valid email format";
             }
 
-            // Password feedback
             if (password.length > 0) {
-                if (!isPassValid) {
-                    passError.className = "text-[11px] text-rose-500 mt-1";
-                    passError.innerText = "Password must be min 8 chars with letters, numbers & special character.";
-                } else {
-                    passError.className = "text-[11px] text-emerald-600 mt-1";
-                    passError.innerText = "Password criteria met successfully!";
-                }
+                passError.className = isPassValid ? "text-[11px] text-emerald-600 mt-1" : "text-[11px] text-rose-500 mt-1";
+                passError.innerText = isPassValid ? "Password criteria met successfully!" : "Password must be min 8 chars with letters, numbers & special character.";
             } else {
                 passError.className = "text-[11px] text-slate-400 mt-1";
                 passError.innerText = "Must be min 8 chars, include letters, numbers & special character.";
@@ -374,14 +380,8 @@
 
             const checkedSubjects = document.querySelectorAll('input[name="pSubjectCheckbox"]:checked');
             const isSubjectSelected = checkedSubjects.length > 0;
-
-            let isOthersValid = true;
             let isOthersChecked = Array.from(checkedSubjects).some(cb => cb.value === 'Others');
-
-            if (isOthersChecked) {
-                const otherVal = document.getElementById('pSubjectsOther').value.trim();
-                isOthersValid = otherVal.length > 0;
-            }
+            let isOthersValid = !isOthersChecked || document.getElementById('pSubjectsOther').value.trim().length > 0;
 
             const requiredFilled = name && isPhoneValid && isEmailValid && location && cls && isSubjectSelected && isOthersValid && budget && isPassValid;
 
@@ -396,6 +396,11 @@
             event.preventDefault();
             alert('Registration successful!!');
         }
+
+        // Initialize on DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDynamicParentFields();
+        });
     </script>
 </body>
 </html>
