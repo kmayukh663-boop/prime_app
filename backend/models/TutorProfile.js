@@ -16,7 +16,7 @@ const tutorSchema = new mongoose.Schema({
   }],
   verificationStatus: { type: String, default: "pending" },
   createdAt: { type: Date, default: Date.now }
-}, { collection: "Tutor_db" });
+}, { collection: "tutor_db" });
 
 module.exports = mongoose.models.TutorProfile ||
   mongoose.model("TutorProfile", tutorSchema);

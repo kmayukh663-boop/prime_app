@@ -8,7 +8,7 @@ const parentSchema = new mongoose.Schema({
   preferredTime: String,
   budget: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
-}, { collection: "Parent_db" });
+}, { collection: "parent_db" });
 
 module.exports = mongoose.models.ParentProfile ||
   mongoose.model("ParentProfile", parentSchema);
