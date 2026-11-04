@@ -1,0 +1,14 @@
+FROM node:24.22.1-bookworm-slim
+
+ENV NODE_ENV=development
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["npm", "start"]

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Log-In - Prime Tuitions / Solutions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .vibrant-bg {
+            background: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
+                        linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.06); }
+        }
+        .animate-float {
+            animation: float-slow 4s ease-in-out infinite;
+        }
+        .animate-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        /* Smooth Panel Transition */
+        .auth-panel {
+            transition: all 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="vibrant-bg text-slate-800 font-sans min-h-screen flex flex-col justify-between py-10 px-4 relative overflow-x-hidden">
+
+    <!-- Ambient Floating Orbs -->
+    <div class="absolute top-10 left-10 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl pointer-events-none animate-glow"></div>
+    <div class="absolute bottom-10 right-10 w-64 h-64 bg-indigo-400/20 rounded-full blur-3xl pointer-events-none animate-glow"></div>
+
+    <!-- Top Navigation / Back Button -->
+    <div class="max-w-md mx-auto w-full mb-6 relative z-10">
+        <a href="sign-up2.html" class="inline-flex items-center space-x-2 text-xs font-bold text-blue-600 hover:text-blue-800 transition-all duration-300 bg-white/80 px-4 py-2 rounded-xl shadow-sm border border-slate-200 transform hover:scale-105 active:scale-95">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Portal Selection</span>
+        </a>
+    </div>
+
+    <!-- Main Form Container -->
+    <main class="max-w-md mx-auto w-full relative z-10">
+        <div class="glass-card rounded-3xl p-8 sm:p-10 shadow-2xl border-t-4 border-t-blue-600">
+            
+            <!-- Header Branding -->
+            <div class="flex items-center space-x-4 mb-6 pb-6 border-b border-slate-200">
+                <div class="h-14 w-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center text-2xl shadow-lg shadow-blue-500/30 animate-float">
+                    <i class="fa-solid fa-right-to-bracket" id="headerIcon"></i>
+                </div>
+                <div>
+
+                    <h2 id="formTitle" class="text-2xl font-black text-slate-900 tracking-tight">Parent Log-In</h2>
+                    <p id="formSubtitle" class="text-xs text-slate-500 font-medium">Access your parent account & dashboard.</p>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 1: STANDARD LOGIN FORM ================= -->
+            <div id="loginView" class="auth-panel">
+                <form id="parentLoginForm" class="space-y-5" onsubmit="handleParentLogin(event)">
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Email / Phone Number</label>
+                        <input type="text" id="pLoginId" required placeholder="Enter email or phone" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm" oninput="validateLoginForm()">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Password</label>
+                        <div class="relative">
+                            <input type="password" id="pLoginPassword" required placeholder="••••••••" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm pr-12" oninput="validateLoginForm()">
+                            <button type="button" onclick="togglePassword('pLoginPassword', 'eyeIconPL')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none">
+                                <i id="eyeIconPL" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs pt-1">
+                        <label class="flex items-center text-slate-600 cursor-pointer">
+                            <input type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 mr-2 h-4 w-4">
+                            Remember me
+                        </label>
+                        <button type="button" onclick="switchView('forgotStep1')" class="text-blue-600 hover:text-blue-800 font-bold bg-transparent border-0 cursor-pointer p-0">Forgot password?</button>
+                    </div>
+
+                    <button type="submit" id="pLoginBtn" disabled class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/20 mt-2 transform hover:scale-105 active:scale-95">
+                        Log-In to Dashboard
+                    </button>
+                </form>
+
+                <div class="mt-6 pt-6 border-t border-slate-200 text-center text-xs text-slate-500">
+                    Don't have an account? <a href="parent_signup.html" class="text-blue-600 font-bold hover:underline">Register here</a>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 2: FORGOT PASSWORD - STEP 1 (Enter ID) ================= -->
+            <div id="forgotStep1" class="auth-panel hidden">
+                <div class="space-y-4">
+                    <p class="text-xs text-slate-600 leading-relaxed">Enter your registered Email ID or Phone Number to receive a One-Time Password (OTP) for account recovery.</p>
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Registered Email / Phone</label>
+                        <input type="text" id="recoveryIdentifier" placeholder="e.g. user@example.com or +91..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm">
+                    </div>
+
+                    <div class="pt-2">
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-2">Select Delivery Method:</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button" onclick="triggerOtpRequest('email')" class="py-3 px-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span>Send to Email</span>
+                            </button>
+                            <button type="button" onclick="triggerOtpRequest('phone')" class="py-3 px-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 font-bold text-xs rounded-xl transition-all flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>Send to Phone</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="switchView('loginView')" class="w-full mt-4 py-2.5 text-xs font-bold text-slate-500 hover:text-slate-700">
+                        ← Back to Log-In
+                    </button>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 3: FORGOT PASSWORD - STEP 2 (OTP Verification & Timer) ================= -->
+            <div id="forgotStep2" class="auth-panel hidden">
+                <div class="space-y-4">
+                    <div class="p-3 bg-blue-50 rounded-xl border border-blue-100 text-xs text-blue-800 flex items-center justify-between">
+                        <span>OTP sent successfully to your <strong id="sentChannelDisplay">email</strong>.</span>
+                        <span id="timerDisplay" class="font-mono font-bold bg-blue-200 px-2 py-0.5 rounded text-blue-900">05:00</span>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Enter 6-Digit OTP</label>
+                        <input type="text" id="otpInput" maxlength="6" placeholder="123456" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-center tracking-widest text-lg font-mono focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm">
+                        <p id="otpErrorMsg" class="text-[11px] text-rose-500 mt-1 hidden">Invalid or expired OTP. Please check or request a new one.</p>
+                    </div>
+
+                    <button type="button" onclick="verifyOtp()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/20">
+                        Verify OTP
+                    </button>
+
+                    <div class="flex items-center justify-between text-xs pt-2">
+                        <button type="button" onclick="triggerOtpRequest(currentChannel)" class="text-blue-600 hover:text-blue-800 font-bold bg-transparent border-0 cursor-pointer">
+                            Resend OTP
+                        </button>
+                        <button type="button" onclick="switchView('forgotStep1')" class="text-slate-500 hover:text-slate-700 font-medium">
+                            Change Identifier
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VIEW 4: FORGOT PASSWORD - STEP 3 (New Password Creation) ================= -->
+            <div id="forgotStep3" class="auth-panel hidden">
+                <form id="resetPasswordForm" class="space-y-4" onsubmit="handlePasswordReset(event)">
+                    <p class="text-xs text-slate-600">Please create a strong new password matching the security guidelines.</p>
+                    
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">New Password</label>
+                        <div class="relative">
+                            <input type="password" id="newPassword" required placeholder="••••••••" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm pr-12" oninput="validateNewPasswordCriteria()">
+                            <button type="button" onclick="togglePassword('newPassword', 'eyeIconNew')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none">
+                                <i id="eyeIconNew" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                        <p id="newPassCriteriaMsg" class="text-[11px] text-slate-400 mt-1">Min 8 chars, include letters, numbers & special character.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword" required placeholder="••••••••" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all shadow-sm" oninput="validateNewPasswordCriteria()">
+                        <p id="matchErrorMsg" class="text-[11px] text-rose-500 mt-1 hidden">Passwords do not match.</p>
+                    </div>
+
+                    <button type="submit" id="resetSubmitBtn" disabled class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/20 mt-2">
+                        Update Password & Log-In
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-slate-500 relative z-10">
+        &copy; 2026 Prime Tuitions / Solutions. Secure Parent Gateway.
+    </footer>
+
+    <!-- Comprehensive JS State & Timer Logic -->
+    <script>
+        let currentChannel = 'email';
+        let countdownInterval = null;
+
+        function togglePassword(fieldId, iconId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById(iconId);
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function validateLoginForm() {
+            const idVal = document.getElementById('pLoginId').value.trim();
+            const passVal = document.getElementById('pLoginPassword').value.trim();
+            document.getElementById('pLoginBtn').disabled = !(idVal && passVal);
+        }
+
+        // State Machine to swap views smoothly within the same card tile
+        function switchView(viewId) {
+            const views = ['loginView', 'forgotStep1', 'forgotStep2', 'forgotStep3'];
+            views.forEach(v => document.getElementById(v).classList.add('hidden'));
+            
+            document.getElementById(viewId).classList.remove('hidden');
+
+            const title = document.getElementById('formTitle');
+            const subtitle = document.getElementById('formSubtitle');
+            const icon = document.getElementById('headerIcon');
+
+            if (viewId === 'loginView') {
+                title.innerText = "Parent Log-In";
+                subtitle.innerText = "Access your parent account & dashboard.";
+                icon.className = "fa-solid fa-right-to-bracket";
+                if (countdownInterval) clearInterval(countdownInterval);
+            } else if (viewId.startsWith('forgot')) {
+                title.innerText = "Password Recovery";
+                subtitle.innerText = "Secure verification via Prime Tuitions Worker API";
+                icon.className = "fa-solid fa-key";
+            }
+        }
+
+        // Trigger OTP generation and start the 5-minute countdown timer (300 seconds)
+        function triggerOtpRequest(channel) {
+            const identifier = document.getElementById('recoveryIdentifier').value.trim();
+            if (!identifier) {
+                alert("Please enter your registered Email ID or Phone Number first.");
+                return;
+            }
+
+            currentChannel = channel;
+            document.getElementById('sentChannelDisplay').innerText = channel;
+            switchView('forgotStep2');
+            startOtpTimer(300); // 5 minutes timer
+        }
+
+        function startOtpTimer(durationInSeconds) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            let timer = durationInSeconds;
+            const display = document.getElementById('timerDisplay');
+
+            countdownInterval = setInterval(() => {
+                let minutes = parseInt(timer / 60, 10);
+                let seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.innerText = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(countdownInterval);
+                    display.innerText = "Expired";
+                }
+            }, 1000);
+        }
+
+        // Mock OTP Authentication Check (Replace with backend API fetch later)
+        function verifyOtp() {
+            const otp = document.getElementById('otpInput').value.trim();
+            const errorMsg = document.getElementById('otpErrorMsg');
+
+            // For testing: assume '123456' or any 6-digit mock code passes. Let's make anything valid for mockup demo, or trigger error if empty.
+            if (otp.length === 6) {
+                errorMsg.classList.add('hidden');
+                if (countdownInterval) clearInterval(countdownInterval);
+                switchView('forgotStep3');
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        // Enforce existing security rules: min length 8, alphanumeric + special character
+        function validateNewPasswordCriteria() {
+            const pass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmNewPassword').value;
+            const criteriaMsg = document.getElementById('newPassCriteriaMsg');
+            const matchError = document.getElementById('matchErrorMsg');
+            const submitBtn = document.getElementById('resetSubmitBtn');
+
+            const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            const isStrong = regex.test(pass);
+            const isMatch = pass === confirmPass && pass.length > 0;
+
+            if (pass.length > 0) {
+                if (!isStrong) {
+                    criteriaMsg.className = "text-[11px] text-rose-500 mt-1";
+                    criteriaMsg.innerText = "Must be min 8 chars, include letters, numbers & special character.";
+                } else {
+                    criteriaMsg.className = "text-[11px] text-emerald-600 mt-1";
+                    criteriaMsg.innerText = "Password criteria met successfully!";
+                }
+            } else {
+                criteriaMsg.className = "text-[11px] text-slate-400 mt-1";
+                criteriaMsg.innerText = "Min 8 chars, include letters, numbers & special character.";
+            }
+
+            if (confirmPass.length > 0 && !isMatch) {
+                matchError.classList.remove('hidden');
+            } else {
+                matchError.classList.add('hidden');
+            }
+
+            if (isStrong && isMatch) {
+                submitBtn.removeAttribute('disabled');
+            } else {
+                submitBtn.setAttribute('disabled', 'true');
+            }
+        }
+
+        function handlePasswordReset(event) {
+            event.preventDefault();
+            alert('Password successfully reset! You can now log-in with your new credentials.');
+            switchView('loginView');
+        }
+
+        function handleParentLogin(event) {
+            event.preventDefault();
+            alert('Successfull!!');
+        }
+    </script>
+</body>
+</html>

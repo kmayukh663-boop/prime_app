@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Portal - Prime Tuitions / Solutions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Dynamic Gradients & Glassmorphism */
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .gradient-text-purple {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .vibrant-bg {
+            background: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 75%, rgba(217, 70, 239, 0.12) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 60%),
+                        linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Keyframes */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .animate-float {
+            animation: float-slow 4s ease-in-out infinite;
+        }
+
+        .animate-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        /* Expandable Accordion Animation for Individual Hover / Tap */
+        .expand-content {
+            max-height: 0px;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), opacity 0.3s ease-in-out;
+        }
+
+        /* Desktop Hover Trigger - Target ONLY specific hovered card */
+        @media (hover: hover) {
+            .expand-card:hover .expand-content {
+                max-height: 400px;
+                opacity: 1;
+                transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            }
+            .expand-card:hover .expand-chevron {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* JS Toggle Trigger for Mobile / Touch Devices */
+        .expand-card.is-expanded .expand-content {
+            max-height: 400px !important;
+            opacity: 1 !important;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .expand-card.is-expanded .expand-chevron {
+            transform: rotate(180deg);
+        }
+        
+        .expand-chevron {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="vibrant-bg text-slate-800 font-sans min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-white/50 px-6 py-4 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 text-white font-black h-11 w-11 rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-indigo-500/30 transform hover:rotate-6 transition-transform">
+                P
+            </div>
+            <div>
+                <h1 class="text-xl font-black text-slate-900 tracking-tight leading-none">Prime Tuitions / Solutions</h1>
+                <p class="text-xs text-indigo-600 font-bold mt-0.5">Empowering Home & Private Education</p>
+            </div>
+        </div>
+        
+        <div class="hidden md:flex items-center space-x-8 text-xs font-extrabold text-slate-700">
+            <a href="#portal-selection" class="hover:text-indigo-600 transition-colors">Select Account</a>
+            <a href="#impact-stats" class="hover:text-indigo-600 transition-colors">Impact & Stats</a>
+            <a href="#about-us" class="hover:text-indigo-600 transition-colors">About Us</a>
+            <a href="#contact-us" class="hover:text-indigo-600 transition-colors">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow">
+        
+        <!-- SECTION 1: Interactive Account Type Selection Tiles -->
+        <section id="portal-selection" class="max-w-6xl mx-auto px-4 pt-16 pb-12 relative">
+            
+            <!-- Ambient Floating Orbs -->
+            <div class="absolute top-10 left-10 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl pointer-events-none animate-glow"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-purple-400/20 rounded-full blur-3xl pointer-events-none animate-glow"></div>
+
+            <div class="text-center max-w-2xl mx-auto mb-14 relative z-10">
+                <span class="inline-flex items-center space-x-2 px-4 py-1.5 bg-indigo-500/10 text-indigo-700 text-xs font-bold rounded-full border border-indigo-200/80 mb-4 shadow-sm">
+                    <span class="h-2 w-2 rounded-full bg-indigo-600 animate-ping"></span>
+                    <span>9,829 active users and counting...</span>
+                </span>
+                
+                <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+                    Select Your <span class="gradient-text-blue">User Portal</span>
+                </h2>
+                <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+                    Choose your account type below and click Log-In or Register to access your dedicated portal.
+                </p>
+            </div>
+
+            <!-- Two Main Non-Clickable Tiles with Animated Action Buttons -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto relative z-10">
+                
+                <!-- PARENT TILE CARD -->
+                <div class="glass-card rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/25 hover:border-blue-500/60 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-44 h-44 bg-gradient-to-br from-blue-500/20 to-cyan-400/20 rounded-full blur-2xl"></div>
+                    
+                    <div>
+                        <div class="h-20 w-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center text-3xl shadow-xl shadow-blue-500/30 mb-6 animate-float">
+                            <i class="fa-solid fa-users-between-lines"></i>
+                        </div>
+
+                        <h3 class="text-3xl font-black text-slate-900">Parent / Guardian</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed">
+                            Find top-rated tutors for your child, review qualified profiles, monitor subject syllabus completion, and manage monthly billing seamlessly.
+                        </p>
+                    </div>
+
+                    <!-- Bottom Animated Action Buttons for Parent -->
+                    <div class="mt-10 pt-5 border-t border-slate-200/80 grid grid-cols-2 gap-3">
+                        <button onclick="navigatePage('parent_login')" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl transition-all duration-300 shadow-sm border border-slate-200 text-center transform hover:scale-105 active:scale-95 hover:shadow-md">
+                            <i class="fa-solid fa-right-to-bracket mr-1.5 text-blue-600"></i> Log-In
+                        </button>
+                        <button onclick="navigatePage('parent_register')" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all duration-300 shadow-md shadow-blue-500/20 text-center transform hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-blue-500/40">
+                            <i class="fa-solid fa-user-plus mr-1.5"></i> Register
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TUTOR TILE CARD -->
+                <div class="glass-card rounded-3xl p-8 sm:p-10 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 hover:border-purple-500/60 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-44 h-44 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-2xl"></div>
+                    
+                    <div>
+                        <div class="h-20 w-20 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-500 text-white flex items-center justify-center text-3xl shadow-xl shadow-purple-500/30 mb-6 animate-float">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+
+                        <h3 class="text-3xl font-black text-slate-900">Tutor / Educator</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed">
+                            Apply to teach nearby home tuitions, track student attendance, record test series scores, and receive automated weekly/monthly payouts.
+                        </p>
+                    </div>
+
+                    <!-- Bottom Animated Action Buttons for Tutor -->
+                    <div class="mt-10 pt-5 border-t border-slate-200/80 grid grid-cols-2 gap-3">
+                        <button onclick="navigatePage('tutor_login')" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl transition-all duration-300 shadow-sm border border-slate-200 text-center transform hover:scale-105 active:scale-95 hover:shadow-md">
+                            <i class="fa-solid fa-right-to-bracket mr-1.5 text-purple-600"></i> Log-In
+                        </button>
+                        <button onclick="navigatePage('tutor_register')" class="w-full py-2.5 px-4 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl transition-all duration-300 shadow-md shadow-purple-500/20 text-center transform hover:scale-105 active:scale-95 hover:shadow-xl hover:shadow-purple-500/40">
+                            <i class="fa-solid fa-user-plus mr-1.5"></i> Register
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: Success & Business Impact Widgets -->
+        <section id="impact-stats" class="py-20 bg-white/50 backdrop-blur-md border-t border-b border-white/80 my-10 relative">
+            <div class="max-w-6xl mx-auto px-6">
+                
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-indigo-600 mb-2 block">Performance & Metrics</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                        Driving Success for <span class="gradient-text-purple">Parents & Tutors</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-2">Real-time indicators showing how our matching platform improves academic outcomes.</p>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div class="glass-card p-6 rounded-3xl relative overflow-hidden transform hover:-translate-y-2 transition-all hover:shadow-xl border border-blue-200/60">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Parent Match Success</span>
+                            <span class="h-8 w-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-handshake"></i></span>
+                        </div>
+                        <div class="text-4xl font-black text-slate-900 mb-2">98.4%</div>
+                        <div class="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden mb-3">
+                            <div class="bg-gradient-to-r from-blue-500 to-cyan-400 h-full rounded-full w-[98%] animate-pulse"></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-normal">Retention rate on first tutor assignment.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-3xl relative overflow-hidden transform hover:-translate-y-2 transition-all hover:shadow-xl border border-purple-200/60">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Student Growth</span>
+                            <span class="h-8 w-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-chart-line"></i></span>
+                        </div>
+                        <div class="text-4xl font-black text-slate-900 mb-2">+25%</div>
+                        <div class="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden mb-3">
+                            <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full w-[85%] animate-pulse"></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-normal">Average exam score increase in 90 days.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-3xl relative overflow-hidden transform hover:-translate-y-2 transition-all hover:shadow-xl border border-emerald-200/60">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Allocation Speed</span>
+                            <span class="h-8 w-8 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-bolt"></i></span>
+                        </div>
+                        <div class="text-4xl font-black text-slate-900 mb-2">&lt; 24 Hrs</div>
+                        <div class="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden mb-3">
+                            <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full w-[92%] animate-pulse"></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-normal">Fast response time for tutor allocation.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-3xl relative overflow-hidden transform hover:-translate-y-2 transition-all hover:shadow-xl border border-pink-200/60">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Tuitions Delivered</span>
+                            <span class="h-8 w-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-clock"></i></span>
+                        </div>
+                        <div class="text-4xl font-black text-slate-900 mb-2">5,000+</div>
+                        <div class="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden mb-3">
+                            <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full rounded-full w-[95%] animate-pulse"></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 leading-normal">Verified sessions tracked on platform.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: Expandable About Us & Contact Us Section -->
+        <section class="py-12 max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- EXPANDABLE ABOUT CARD -->
+            <div id="about-us" onclick="toggleCard('about-us')" class="expand-card glass-card p-8 rounded-3xl border border-white/80 cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-indigo-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3">
+                        <div class="h-10 w-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-lg shadow-md">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900">About Prime Tuitions</h3>
+                    </div>
+
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mt-4">
+                        Prime Tuitions / Solutions is an educational management framework designed to make parent-tutor matching simple, reliable, and trackable.
+                    </p>
+
+                    <!-- Hidden Content Revealed on Hover / Tap -->
+                    <div class="expand-content">
+                        <div class="pt-4 mt-4 border-t border-slate-200/80 text-xs text-slate-600 space-y-2">
+                            <p>✓ <strong>Verified Educator Pool:</strong> Every tutor undergoes background checks and academic qualification validation.</p>
+                            <p>✓ <strong>Syllabus & Test Series Tracking:</strong> Real-time progress updates so parents stay informed on exam readiness.</p>
+                            <p>✓ <strong>Automated Payouts & Invoicing:</strong> Integrated transparent payment cycles for tutors and parents.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expand Trigger Footer -->
+                <div class="mt-6 pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs font-bold text-indigo-600">
+                    <span>Show more details</span>
+                    <i class="fa-solid fa-chevron-down expand-chevron text-[10px]"></i>
+                </div>
+            </div>
+
+            <!-- EXPANDABLE CONTACT CARD -->
+            <div id="contact-us" onclick="toggleCard('contact-us')" class="expand-card glass-card p-8 rounded-3xl border border-white/80 cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-purple-300 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3">
+                        <div class="h-10 w-10 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-lg shadow-md">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900">Contact Support</h3>
+                    </div>
+
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mt-4">
+                        Have questions regarding tutor onboarding, parent registration, or platform features? Our operations team is ready to assist.
+                    </p>
+
+                    <!-- Hidden Content Revealed on Hover / Tap -->
+                    <div class="expand-content">
+                        <div class="pt-4 mt-4 border-t border-slate-200/80 text-xs font-bold text-slate-700 space-y-2">
+                            <p><i class="fa-solid fa-envelope text-indigo-600 mr-2"></i> support@primesolutions.com</p>
+                            <p><i class="fa-solid fa-phone text-indigo-600 mr-2"></i> +91 (800) 123-4567</p>
+                            <p><i class="fa-solid fa-location-dot text-indigo-600 mr-2"></i> Operations Hub, Uttar Pradesh, India</p>
+                            <p class="text-[11px] text-slate-500 font-normal pt-1">Operating Hours: Mon - Sat (9:00 AM - 7:00 PM IST)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expand Trigger Footer -->
+                <div class="mt-6 pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs font-bold text-purple-600">
+                    <span>Show more details</span>
+                    <i class="fa-solid fa-chevron-down expand-chevron text-[10px]"></i>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer with Social Handlers -->
+    <footer class="bg-white/80 backdrop-blur-xl border-t border-slate-200/80 py-8 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <div class="text-center md:text-left">
+                <span class="font-black text-slate-900 text-sm">Prime Tuitions / Solutions</span>
+                <p class="text-xs text-slate-500 mt-0.5">&copy; 2026 All rights reserved.</p>
+            </div>
+
+            <!-- Sub Links -->
+            <div class="flex flex-wrap justify-center gap-6 text-xs font-extrabold text-slate-600">
+                <a href="#about-us" class="hover:text-indigo-600 transition-colors">About Us</a>
+                <a href="#impact-stats" class="hover:text-indigo-600 transition-colors">Business Impact</a>
+                <a href="#contact-us" class="hover:text-indigo-600 transition-colors">Contact</a>
+            </div>
+
+            <!-- Social Media Handlers -->
+            <div class="flex items-center space-x-3">
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram" class="h-10 w-10 rounded-2xl bg-slate-100 hover:bg-pink-50 hover:text-pink-600 flex items-center justify-center text-slate-600 transition-all shadow-sm border border-slate-200">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com" target="_blank" aria-label="Facebook" class="h-10 w-10 rounded-2xl bg-slate-100 hover:bg-blue-50 hover:text-blue-600 flex items-center justify-center text-slate-600 transition-all shadow-sm border border-slate-200">
+                    <i class="fa-brands fa-facebook-f text-xs"></i>
+                </a>
+                <a href="https://whatsapp.com" target="_blank" aria-label="WhatsApp" class="h-10 w-10 rounded-2xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center text-slate-600 transition-all shadow-sm border border-slate-200">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="h-10 w-10 rounded-2xl bg-slate-100 hover:bg-blue-50 hover:text-blue-700 flex items-center justify-center text-slate-600 transition-all shadow-sm border border-slate-200">
+                    <i class="fa-brands fa-linkedin-in text-xs"></i>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Navigation & Expand Toggle Script -->
+    <script>
+        function navigatePage(action) {
+            if (action === 'parent_register') {
+                window.location.href = 'parent_signup.html';
+            } else if (action === 'parent_login') {
+                window.location.href = 'parent_login.html';
+            } else if (action === 'tutor_register') {
+                window.location.href = 'tutor_signup.html';
+            } else if (action === 'tutor_login') {
+                window.location.href = 'tutor_login.html';
+            }
+        }
+
+        // Toggle card expansion independently for Mobile / Touch devices
+        function toggleCard(cardId) {
+            const card = document.getElementById(cardId);
+            card.classList.toggle('is-expanded');
+        }
+    </script>
+</body>
+</html>
