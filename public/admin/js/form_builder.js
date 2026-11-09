@@ -20,6 +20,11 @@ const schemaNeedsMigration = {
     tutor: false
 };
 
+const schemaDirty = {
+    parent: false,
+    tutor: false
+};
+
 function getAdminToken() {
     return (
         localStorage.getItem("adminToken") ||
@@ -84,6 +89,7 @@ async function loadSchemaDraft(formType, forceReload = false) {
     if (result.fields.length === 0) {
         schemaNeedsMigration[formType] = false;
     }   
+    schemaDirty[formType] = false;
     return schemaCache[formType];
 }
 
@@ -236,7 +242,8 @@ export function initFormBuilder() {
     window.resetSchemaToDefault = resetSchemaToDefault;
     window.switchToPreview = switchToPreview;
     window.switchToSettings = switchToSettings;
-    window.saveAndApplyChanges = saveAndApplyChanges;
+    window.saveSchemaDraft = saveSchemaDraft;
+    window.publishSchema = publishSchema;
     window.toggleFieldWidthInPreview = toggleFieldWidthInPreview;
 }
 
@@ -300,14 +307,8 @@ function getCurrentSchema() {
 
 function saveSchemaToStorage(schema) {
     schemaCache[currentTarget] = schema.map(field => ({ ...field }));
+    schemaDirty[currentTarget] = true;
 
-    // Temporary compatibility mirror.
-    // MongoDB will become the persistent save destination in the next stage.
-    const key = currentTarget === 'parent'
-        ? 'parent_signup_schema'
-        : 'tutor_signup_schema';
-
-    localStorage.setItem(key, JSON.stringify(schema));
 }
 
 function switchToPreview() {
@@ -712,9 +713,114 @@ function toggleFieldWidthInPreview(index) {
     renderPreviewForm();
 }
 
-function saveAndApplyChanges() {
+async function saveSchemaDraft() {
+    const formType = currentTarget;
+    const token = getAdminToken();
+
+    if (!token) {
+        alert("Admin session expired. Please log in again.");
+        return;
+    }
+
     const schema = getCurrentSchema();
-    saveSchemaToStorage(schema);
-    alert(`Success: Form schema for ${currentTarget.toUpperCase()} portal has been successfully saved and applied to live sign-up pages!`);
-    closeFormBuilderModal();
+
+    try {
+        const response = await fetch(
+            `${ADMIN_API_BASE_URL}/schemas/${formType}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    fields: schema
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Unable to save draft.");
+        }
+
+        schemaDirty[formType] = false;
+        schemaNeedsMigration[formType] = false;
+
+        if (!schemaMetadata[formType]) {
+            schemaMetadata[formType] = {};
+        }
+
+        schemaMetadata[formType].draftVersion = result.draftVersion;
+
+        alert(
+            `${formType.toUpperCase()} form draft saved successfully in MongoDB.\n\n` +
+            `Draft version: ${result.draftVersion}\n\n` +
+            `The live registration form has NOT been changed.`
+        );
+
+    } catch (error) {
+        console.error("Save draft failed:", error);
+        alert(error.message || "Unable to save the draft.");
+    }
+}
+
+async function publishSchema() {
+    const formType = currentTarget;
+    const token = getAdminToken();
+
+    if (!token) {
+        alert("Admin session expired. Please log in again.");
+        return;
+    }
+
+    if (schemaDirty[formType] || schemaNeedsMigration[formType]) {
+        alert("Please save the current draft before publishing.");
+        return;
+    }
+
+    const confirmed = confirm(
+        `Publish the saved ${formType.toUpperCase()} form schema?\n\n` +
+        `This will update the live registration form.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch(
+            `${ADMIN_API_BASE_URL}/schemas/${formType}/publish`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Unable to publish schema.");
+        }
+
+        if (!schemaMetadata[formType]) {
+            schemaMetadata[formType] = {};
+        }
+
+        schemaMetadata[formType].publishedVersion =
+            result.publishedVersion;
+
+        schemaMetadata[formType].publishedAt =
+            result.publishedAt;
+
+        alert(
+            `${formType.toUpperCase()} form published successfully!\n\n` +
+            `Published version: ${result.publishedVersion}`
+        );
+
+    } catch (error) {
+        console.error("Publish schema failed:", error);
+        alert(error.message || "Unable to publish the schema.");
+    }
 }

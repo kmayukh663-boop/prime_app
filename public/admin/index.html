@@ -292,10 +292,25 @@
                     <button type="button" onclick="switchToSettings()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl transition-all">
                         Cancel & Go Back
                     </button>
-                    <button type="button" onclick="saveAndApplyChanges()" class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/30 transition-all flex items-center space-x-2">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Save and Apply Changes</span>
+                <div class="flex flex-wrap justify-end gap-3">
+                    <button
+                        type="button"
+                        onclick="saveSchemaDraft()"
+                        class="px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition-all"
+                    >
+                        <i class="fa-solid fa-floppy-disk mr-1"></i>
+                        Save Draft
                     </button>
+
+                    <button
+                        type="button"
+                        onclick="publishSchema()"
+                        class="px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-all"
+                    >
+                        <i class="fa-solid fa-cloud-arrow-up mr-1"></i>
+                        Publish
+                    </button>
+                </div>
                 </div>
             </div>
 
