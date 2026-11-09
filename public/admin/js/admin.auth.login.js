@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://prime-app-1.onrender.com";
 const DASHBOARD_URL = "/admin/index.html";
 
 function showLoginMessage(message, type = "info") {

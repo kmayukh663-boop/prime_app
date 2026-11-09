@@ -27,7 +27,7 @@ async function renderDynamicTutorFields() {
     let fields = [];
 
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/schemas/tutor');
+        const response = await fetch('https://prime-app-1.onrender.com/api/schemas/tutor');
         if (response.ok) {
             fields = await response.json();
         }
@@ -243,7 +243,7 @@ async function handleTutorSubmit(event) {
     if (idProofFile) formData.append("idProof", idProofFile);
 
     try {
-        const response = await fetch("http://localhost:5000/api/auth/register/tutor", {
+        const response = await fetch("https://prime-app-1.onrender.com/api/auth/register/tutor", {
             method: "POST",
             body: formData
         });

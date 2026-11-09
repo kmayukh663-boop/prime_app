@@ -3,7 +3,7 @@
 let currentTarget = 'parent';
 let currentView = 'settings'; // 'settings' or 'preview'
 let editingIndex = null; // Tracks which field is currently being edited
-const ADMIN_API_BASE_URL = "http://localhost:5000/api/admin";
+const ADMIN_API_BASE_URL = "https://prime-app-1.onrender.com/api/admin";
 
 const schemaCache = {
     parent: null,
