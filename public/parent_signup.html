@@ -183,7 +183,7 @@
             let fields;
 
             try {
-                const response = await fetch('https://prime-app-1.onrender.com/api/schemas/parent');
+                const response = await fetch('/api/schemas/parent');
 
                 if (!response.ok) {
                     throw new Error(`Schema request failed: HTTP ${response.status}`);

@@ -3,7 +3,7 @@
 let currentTarget = 'parent';
 let currentView = 'settings'; // 'settings' or 'preview'
 let editingIndex = null; // Tracks which field is currently being edited
-const ADMIN_API_BASE_URL = "https://prime-app-1.onrender.com/api/admin";
+
 
 const schemaCache = {
     parent: null,
@@ -50,7 +50,7 @@ async function loadSchemaDraft(formType, forceReload = false) {
     }
 
     const response = await fetch(
-        `${ADMIN_API_BASE_URL}/schemas/${formType}`,
+        `/api/admin/schemas/${formType}`,
         {
             method: "GET",
             headers: {
@@ -726,7 +726,7 @@ async function saveSchemaDraft() {
 
     try {
         const response = await fetch(
-            `${ADMIN_API_BASE_URL}/schemas/${formType}`,
+            `/api/admin/schemas/${formType}`,
             {
                 method: "PUT",
                 headers: {
@@ -789,7 +789,7 @@ async function publishSchema() {
 
     try {
         const response = await fetch(
-            `${ADMIN_API_BASE_URL}/schemas/${formType}/publish`,
+            `/api/admin/schemas/${formType}/publish`,
             {
                 method: "POST",
                 headers: {

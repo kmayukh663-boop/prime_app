@@ -27,7 +27,7 @@ async function renderDynamicParentFields() {
     let fields = [];
 
     try {
-        const response = await fetch('https://prime-app-1.onrender.com/api/schemas/parent');
+        const response = await fetch('/api/schemas/parent');
         if (response.ok) {
             const result = await response.json();
             fields = Array.isArray(result.fields) ? result.fields : [];
@@ -276,7 +276,7 @@ async function handleParentSubmit(event) {
     };
 
     try {
-        const response = await fetch("https://prime-app-1.onrender.com/api/auth/register/parent", {
+        const response = await fetch("/api/auth/register/parent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)

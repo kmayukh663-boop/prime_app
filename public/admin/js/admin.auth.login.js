@@ -1,4 +1,3 @@
-const API_BASE_URL = "https://prime-app-1.onrender.com";
 const DASHBOARD_URL = "/admin/index.html";
 
 function showLoginMessage(message, type = "info") {
@@ -64,7 +63,7 @@ async function handleAuth(event) {
     showLoginMessage("Verifying your credentials...");
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+        const response = await fetch("/api/admin/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
